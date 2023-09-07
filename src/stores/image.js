@@ -20,7 +20,6 @@ export const useImageStore = defineStore('image', () => {
     })
 
     response = await response.json()
-    console.log(response)
 
     return response.data[0].url
   }
