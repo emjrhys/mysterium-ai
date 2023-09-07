@@ -17,7 +17,7 @@
 
 <script setup>
 import { ref } from 'vue'
-import { useImageStore } from '../stores/image'
+import { useImageStore } from '@/stores/image'
 
 const imageStore = useImageStore()
 
