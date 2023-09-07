@@ -1,13 +1,15 @@
 <template>
   <div class="play">
-    <v-img 
-      v-for="image, index in images" 
-      :key="index" 
-      :width="300" 
-      aspect-ratio="1/1" 
-      cover 
-      :src="image.url" 
-    />
+    <div class="images">
+      <v-img 
+        v-for="image, index in images" 
+        :key="index" 
+        :width="300" 
+        aspect-ratio="1/1" 
+        cover 
+        :src="image.url" 
+      />
+    </div>
     <v-text-field v-model="prompt" label="Prompt" variant="solo" />
     <v-slider
       v-model="numImages"
@@ -16,7 +18,9 @@
       :step="1"
       thumb-label
     />
-    <v-btn color="teal" :loading="loading" @click="generateImage">Go</v-btn>
+    <div class="btn-wrapper">
+      <v-btn color="teal" :loading="loading" @click="generateImage">Go</v-btn>
+    </div>
   </div>
 </template>
 
@@ -40,4 +44,16 @@ const generateImage = async () => {
 };
 </script>
 
-<style></style>
+<style scoped>
+.images {
+  display: flex;
+  gap: 1rem;
+
+  margin-bottom: 1rem;
+}
+
+.btn-wrapper {
+  display: flex;
+  justify-content: center;
+}
+</style>

@@ -5,7 +5,6 @@
   >
     <template v-slot:activator="{ props }">
       <v-btn
-        color="teal-darken-4"
         v-bind="props"
       >
         How to Play
