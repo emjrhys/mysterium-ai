@@ -35,10 +35,7 @@ npm run lint
 ```
 
 ## Documentation
-[Vue 3](https://vuejs.org/guide/introduction.html)
-
-[OpenAI](https://platform.openai.com/docs/api-reference/images)
-
-[Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch)
-
-[Vuetify](https://vuetifyjs.com/en/components/all/)
+- [Vue 3](https://vuejs.org/guide/introduction.html)
+- [OpenAI](https://platform.openai.com/docs/api-reference/images)
+- [Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch)
+- [Vuetify](https://vuetifyjs.com/en/components/all/)
