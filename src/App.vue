@@ -6,7 +6,7 @@
     >
       <v-app-bar-title>MysterAIm</v-app-bar-title>
   
-      <template v-slot:append>
+      <template #append>
         <HowToPlayDialog />
       </template>
     </v-app-bar>

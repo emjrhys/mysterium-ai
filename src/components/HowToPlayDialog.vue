@@ -3,7 +3,7 @@
     v-model="active"
     width="auto"
   >
-    <template v-slot:activator="{ props }">
+    <template #activator="{ props }">
       <v-btn
         v-bind="props"
       >
