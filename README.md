@@ -1,4 +1,4 @@
-# mysterium-ai
+# Mysterium AI
 
 ## Connect to OpenAI
 Place your OpenAI API key in a `.env` file as `VITE_OPENAI_API_KEY`.
