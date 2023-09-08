@@ -1,6 +1,10 @@
 <script setup>
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
+
 function goToPlayView() {
-  this.$router.push("/play");
+  router.push("/play");
 }
 </script>
 
