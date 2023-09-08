@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 
-const apiKey = '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'; // TODO: obfuscate this before publishing to the internet
+const apiKey = import.meta.env.VITE_OPENAI_API_KEY;
 
 export const useImageStore = defineStore('image', () => {
   const getImage = async (prompt, numImages) => {

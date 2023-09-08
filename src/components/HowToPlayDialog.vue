@@ -3,9 +3,8 @@
     v-model="active"
     width="auto"
   >
-    <template v-slot:activator="{ props }">
+    <template #activator="{ props }">
       <v-btn
-        color="teal-darken-4"
         v-bind="props"
       >
         How to Play
