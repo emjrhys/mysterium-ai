@@ -2,6 +2,7 @@
   <v-dialog
     v-model="active"
     width="auto"
+    max-width="800"
   >
     <template #activator="{ props }">
       <v-btn
@@ -11,7 +12,7 @@
       </v-btn>
     </template>
 
-    <v-card id="how-to-play">
+    <v-card>
       <v-card-text>
         You have been invited to Murkbrook Manor for a séance. 
         As the clock strikes five, you make contact with a spirit who has been cursed to haunt the manor until their murderer is brought to justice. 
@@ -31,10 +32,3 @@ import { ref } from 'vue';
 
 const active = ref(false);
 </script>
-
-<style scoped>
-
-#how-to-play {
-  width: 50%;
-}
-</style>
