@@ -1,10 +1,12 @@
 <template>
+  <v-btn @click="gameStore.newGame()">Reset Game</v-btn>
   <v-item-group mandatory>
     <v-container>
       <v-row>
         <v-col
-          v-for="n in 6"
-          :key="n"
+          v-for="character, index in gameStore.characters"
+          v-show="!character.hidden"
+          :key="index"
           cols="12"
           md="4"
         >
@@ -13,12 +15,10 @@
               :color="isSelected ? 'primary' : ''"
               class="d-flex align-center"
               dark
-              height="200"
-              @click="toggle"
+              @click="character.hidden = true"
             >
               <v-img
-                src="characters/1.png"
-                height="200px"
+                :src="`characters/${character.url}`"
               ></v-img>
             </v-card>
           </v-item>
@@ -49,13 +49,18 @@
       <v-btn color="teal" :loading="loading" @click="generateImage">Go</v-btn>
     </div>
   </div>
+  <p>{{gameStore.murderer}}</p>
 </template>
 
 <script setup>
 import { ref } from 'vue';
 import { useImageStore } from '@/stores/image';
+import { useGameStore } from '@/stores/game';
 
 const imageStore = useImageStore();
+const gameStore = useGameStore();
+
+gameStore.newGame();
 
 const prompt = ref(null);
 const numImages = ref(1);
