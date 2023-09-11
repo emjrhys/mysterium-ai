@@ -1,4 +1,31 @@
 <template>
+  <v-item-group mandatory>
+    <v-container>
+      <v-row>
+        <v-col
+          v-for="n in 6"
+          :key="n"
+          cols="12"
+          md="4"
+        >
+          <v-item v-slot="{ isSelected, toggle }">
+            <v-card
+              :color="isSelected ? 'primary' : ''"
+              class="d-flex align-center"
+              dark
+              height="200"
+              @click="toggle"
+            >
+              <v-img
+                src="characters/1.png"
+                height="200px"
+              ></v-img>
+            </v-card>
+          </v-item>
+        </v-col>
+      </v-row>
+    </v-container>
+  </v-item-group>
   <div class="play">
     <div class="images">
       <v-img 
