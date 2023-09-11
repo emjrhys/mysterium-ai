@@ -1,7 +1,8 @@
 import { defineStore } from 'pinia';
+import { ref, reactive } from 'vue';
 
 export const useGameStore = defineStore('game', () => {
-  const characters = [
+  const characters = reactive([
     {
       profession: 'archaeologist',
       url: 'archaeologist.png',
@@ -20,37 +21,40 @@ export const useGameStore = defineStore('game', () => {
       keywords: ['magnifying glass', 'files', 'crime tape'],
       hidden: false,
     }
-  ];
+  ]);
   
-  let murderer;
-  let phase = 0;
+  const answers = ref([]);
+  const phase = ref(0);
+  const turn = ref(0);
 
   const newGame = () => {
     resetGame();
-    chooseMurderer();
+    chooseAnswers();
   }
 
   const resetGame = () => {
-    phase = 0;
+    phase.value = 0;
     for (const character of characters) {
       character.hidden = false;
     }
   }
 
-  const chooseMurderer = () => {
-    murderer = Math.floor(Math.random() * characters.length);
+  const chooseAnswers = () => {
+    const murderer = Math.floor(Math.random() * characters.length);
+    const room = Math.floor(Math.random() * characters.length);
+    const weapon = Math.floor(Math.random() * characters.length);
+    answers.value = [murderer, room, weapon];
   }
 
   const checkGuess = (guess) => {
-    if (phase === 0) {
-      if (guess === murderer) {
-        phase++;
-      } else {
-        characters[guess].hidden = true;
-      }
+    const options = [characters, characters, characters]
+    if (guess === answers.value[phase.value]) {
+      phase.value++;
+    } else {
+      options[phase.value][guess].hidden = true;
     }
-    
+    turn.value++;
   }
 
-  return {characters, murderer, newGame, checkGuess};
+  return {characters, answers, phase, turn, newGame, checkGuess};
 });

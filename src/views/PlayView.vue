@@ -4,8 +4,8 @@
     <v-container>
       <v-row>
         <v-col
-          v-for="character, index in gameStore.characters"
-          v-show="!character.hidden"
+          v-for="option, index in currentPhaseOptions"
+          v-show="!option.hidden"
           :key="index"
           cols="12"
           md="4"
@@ -15,10 +15,10 @@
               :color="isSelected ? 'primary' : ''"
               class="d-flex align-center"
               dark
-              @click="character.hidden = true"
+              @click="gameStore.checkGuess(index)"
             >
               <v-img
-                :src="`characters/${character.url}`"
+                :src="`images/${option.url}`"
               ></v-img>
             </v-card>
           </v-item>
@@ -49,23 +49,45 @@
       <v-btn color="teal" :loading="loading" @click="generateImage">Go</v-btn>
     </div>
   </div>
-  <p>{{gameStore.murderer}}</p>
+  <p>{{gameStore.answers}}</p>
+  <p>Phase: {{gameStore.phase}}</p>
+  <p>Turn: {{gameStore.turn}}</p>
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, computed, watchEffect } from 'vue';
 import { useImageStore } from '@/stores/image';
 import { useGameStore } from '@/stores/game';
 
 const imageStore = useImageStore();
 const gameStore = useGameStore();
 
-gameStore.newGame();
-
 const prompt = ref(null);
 const numImages = ref(1);
 const images = ref(null);
 const loading = ref(false);
+
+const currentPhaseOptions = computed(() => {
+  const phase = gameStore.phase.value;
+  if (phase === 0) {
+    return gameStore.characters;
+  }
+  if (phase === 1) {
+    return gameStore.characters;
+  }
+  else {
+    return gameStore.characters;
+  }
+})
+
+watchEffect(() => {
+  if (gameStore.turn.value > 6 && gameStore.phase.value < 3) {
+    alert('You lose!');
+  }
+  else if (gameStore.phase.value > 2) {
+    alert('You win!');
+  }
+})
 
 const generateImage = async () => {
   if (!prompt.value) return;
@@ -74,6 +96,8 @@ const generateImage = async () => {
   images.value = await imageStore.getImage(prompt.value, numImages.value);
   loading.value = false;
 };
+
+gameStore.newGame();
 </script>
 
 <style scoped>
