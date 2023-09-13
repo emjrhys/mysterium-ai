@@ -58,7 +58,7 @@ const images = ref(null);
 const loading = ref(false);
 
 const currentPhaseOptions = computed(() => {
-  const phase = gameStore.phase.value;
+  const phase = gameStore.phase;
   if (phase === 0) {
     return gameStore.characters;
   }
@@ -71,10 +71,9 @@ const currentPhaseOptions = computed(() => {
 })
 
 watchEffect(() => {
-  if (gameStore.turn.value > 6 && gameStore.phase.value < 3) {
+  if (gameStore.turn > 6 && gameStore.phase < 3) {
     alert('You lose!');
-  }
-  else if (gameStore.phase.value > 2) {
+  } else if (gameStore.phase > 2) {
     alert('You win!');
   }
 })
