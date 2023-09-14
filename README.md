@@ -37,3 +37,14 @@ yarn format
 - [Vuetify](https://vuetifyjs.com/en/components/all/)
 - [OpenAI](https://platform.openai.com/docs/api-reference/images)
 - [Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch)
+
+
+## TODO
+#### Easy
+- [ ] clear clues when you advance to the next phase
+- [ ] generate a new clue after you guess (whether or not the answer was right)
+- [ ] add keywords to rooms
+- [ ] add some more characters
+
+#### Advanced
+- [ ] display a loading indicator while the clue is generating (you'll need to create a new loading variable in the game store)
