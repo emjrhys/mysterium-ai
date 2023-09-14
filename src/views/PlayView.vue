@@ -20,7 +20,7 @@
       <v-img 
         v-for="imageUrl, index in gameStore.clues" 
         :key="index" 
-        :width="300" 
+        :height="300" 
         aspect-ratio="1/1" 
         :src="imageUrl" 
       />
@@ -32,13 +32,11 @@
 </template>
 
 <script setup>
-import { ref, computed, watchEffect } from 'vue';
+import { computed, watchEffect } from 'vue';
 import { useGameStore } from '@/stores/game';
 import OptionCard from '@/components/OptionCard.vue';
 
 const gameStore = useGameStore();
-
-const images = ref(null);
 
 const currentPhaseOptions = computed(() => {
   const phase = gameStore.phase;
