@@ -1,7 +1,9 @@
 import { defineStore } from 'pinia';
 import { ref, reactive } from 'vue';
+import { useImageStore } from './image';
 
 export const useGameStore = defineStore('game', () => {
+  const imageStore = useImageStore();
   const characters = reactive([
     {
       profession: 'archaeologist',
@@ -84,10 +86,12 @@ export const useGameStore = defineStore('game', () => {
   const answers = ref([]);
   const phase = ref(0);
   const turn = ref(0);
+  const clues = ref([]);
 
   const newGame = () => {
     resetGame();
     chooseAnswers();
+    generateClueImage();
   }
 
   const resetGame = () => {
@@ -104,15 +108,40 @@ export const useGameStore = defineStore('game', () => {
     answers.value = [murderer, room, weapon];
   }
 
+  const getCurrentPhaseOptions = () => {
+    if (phase.value === 0) {
+      return characters;
+    }
+    if (phase.value === 1) {
+      return rooms;
+    }
+    else {
+      return characters;
+    }
+  }
+
   const checkGuess = (guess) => {
-    const options = [characters, rooms, characters]
     if (guess === answers.value[phase.value]) {
       phase.value++;
+      // Clear the previous clue images
     } else {
-      options[phase.value][guess].hidden = true;
+      getCurrentPhaseOptions()[guess].hidden = true;
     }
     turn.value++;
   }
 
-  return {characters, rooms, answers, phase, turn, newGame, checkGuess};
+  const getCurrentAnswer = () => {
+    return getCurrentPhaseOptions()[answers.value[phase.value]];
+  }
+
+  const generateClueImage = async () => {
+    const keywords = getCurrentAnswer().keywords;
+    const shuffledKeywords = keywords.sort(() => 0.5 - Math.random());
+    const selectedKeywords = shuffledKeywords.slice(0, 2);
+    const prompt = `detailed illustration of ${selectedKeywords[0]} and ${selectedKeywords[1]} with other related objects in the background, abstract digital art`;
+    const response = await imageStore.getImage(prompt, 1);
+    clues.value.push(response[0].url);
+  }
+
+  return {characters, rooms, answers, phase, turn, clues, newGame, checkGuess};
 });
