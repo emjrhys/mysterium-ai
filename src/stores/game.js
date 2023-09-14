@@ -22,6 +22,64 @@ export const useGameStore = defineStore('game', () => {
       hidden: false,
     }
   ]);
+
+  const rooms = reactive([
+    {
+      room: 'bathroom',
+      url: 'rooms/bathroom.png',
+      keywords: [],
+      hidden: false,
+    },
+    {
+      room: 'bedroom',
+      url: 'rooms/bedroom.png',
+      keywords: [],
+      hidden: false,
+    },
+    {
+      room: 'cellar',
+      url: 'rooms/cellar.png',
+      keywords: [],
+      hidden: false,
+    },
+    {
+      room: 'chapel',
+      url: 'rooms/chapel.png',
+      keywords: [],
+      hidden: false,
+    },
+    {
+      room: 'greenhouse',
+      url: 'rooms/greenhouse.png',
+      keywords: [],
+      hidden: false,
+    },
+    {
+      room: 'kitchen',
+      url: 'rooms/kitchen.png',
+      keywords: [],
+      hidden: false,
+    },
+    {
+      room: 'library',
+      url: 'rooms/library.png',
+      keywords: [],
+      hidden: false,
+    },
+    {
+      room: 'parlor',
+      url: 'rooms/parlor.png',
+      keywords: [],
+      hidden: false,
+    },
+    {
+      room: 'stable',
+      url: 'rooms/stable.png',
+      keywords: [],
+      hidden: false,
+    },
+
+  ]);
   
   const answers = ref([]);
   const phase = ref(0);
@@ -41,13 +99,13 @@ export const useGameStore = defineStore('game', () => {
 
   const chooseAnswers = () => {
     const murderer = Math.floor(Math.random() * characters.length);
-    const room = Math.floor(Math.random() * characters.length);
+    const room = Math.floor(Math.random() * rooms.length);
     const weapon = Math.floor(Math.random() * characters.length);
     answers.value = [murderer, room, weapon];
   }
 
   const checkGuess = (guess) => {
-    const options = [characters, characters, characters]
+    const options = [characters, rooms, characters]
     if (guess === answers.value[phase.value]) {
       phase.value++;
     } else {
@@ -56,5 +114,5 @@ export const useGameStore = defineStore('game', () => {
     turn.value++;
   }
 
-  return {characters, answers, phase, turn, newGame, checkGuess};
+  return {characters, rooms, answers, phase, turn, newGame, checkGuess};
 });

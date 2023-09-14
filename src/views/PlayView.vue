@@ -63,7 +63,7 @@ const currentPhaseOptions = computed(() => {
     return gameStore.characters;
   }
   if (phase === 1) {
-    return gameStore.characters;
+    return gameStore.rooms;
   }
   else {
     return gameStore.characters;
