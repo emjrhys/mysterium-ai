@@ -10,18 +10,7 @@
           cols="12"
           md="4"
         >
-          <v-item v-slot="{ isSelected, toggle }">
-            <v-card
-              :color="isSelected ? 'primary' : ''"
-              class="d-flex align-center"
-              dark
-              @click="gameStore.checkGuess(index)"
-            >
-              <v-img
-                :src="`images/${option.url}`"
-              ></v-img>
-            </v-card>
-          </v-item>
+          <OptionCard :option="option" :index="index" />
         </v-col>
       </v-row>
     </v-container>
@@ -58,6 +47,7 @@
 import { ref, computed, watchEffect } from 'vue';
 import { useImageStore } from '@/stores/image';
 import { useGameStore } from '@/stores/game';
+import OptionCard from '@/components/OptionCard.vue';
 
 const imageStore = useImageStore();
 const gameStore = useGameStore();
