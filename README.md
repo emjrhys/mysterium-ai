@@ -48,3 +48,4 @@ yarn format
 
 #### Advanced
 - [ ] display a loading indicator while the clue is generating (you'll need to create a new loading variable in the game store)
+- [ ] add a notification that tells you if your guess was correct or not (or if you automatically moved on because there was only one guess left)
