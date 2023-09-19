@@ -45,8 +45,10 @@ yarn format
 - [ ] generate a new clue after you guess (whether or not the answer was right)
 - [ ] add keywords to rooms
 - [ ] add some more characters
+- [ ] add objects
 
 #### Advanced
 - [ ] display a loading indicator while the clue is generating (you'll need to create a new loading variable in the game store)
 - [ ] add a notification that tells you if your guess was correct or not (or if you automatically moved on because there was only one guess left)
 - [ ] add display for correct answers
+- [ ] prevent player from guessing while clue is loading
