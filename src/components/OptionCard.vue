@@ -1,5 +1,5 @@
 <template>
-  <v-item v-slot="{ isSelected, toggle }">
+  <v-item v-slot="{ isSelected }">
     <v-card
       :color="isSelected ? 'primary' : ''"
       class="d-flex align-center"
