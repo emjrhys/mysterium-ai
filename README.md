@@ -41,9 +41,9 @@ yarn format
 
 ## TODO
 #### Easy
-- [ ] clear clues when you advance to the next phase
-- [ ] generate a new clue after you guess (whether or not the answer was right)
-- [ ] add keywords to rooms
+- [x] clear clues when you advance to the next phase
+- [x] generate a new clue after you guess (whether or not the answer was right)
+- [x] add keywords to rooms
 - [ ] add some more characters
 
 #### Advanced
