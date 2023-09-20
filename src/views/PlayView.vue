@@ -16,6 +16,7 @@
     </v-container>
   </v-item-group>
   <div class="play">
+    <p v-if="gameStore.clueLoading">The spirit will send you a spectral image soon...</p>
     <div class="images">
       <v-img 
         v-for="imageUrl, index in gameStore.clues" 
