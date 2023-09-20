@@ -7,20 +7,20 @@ export const useGameStore = defineStore('game', () => {
   const characters = reactive([
     {
       profession: 'archaeologist',
-      url: 'archaeologist.png',
-      keywords: ['treasure', 'jar', 'pottery', 'chest', 'shovel'],
+      url: 'characters/archaeologist.png',
+      keywords: ['treasure', 'jar', 'pottery', 'chest', 'shovel', 'discovery'],
       hidden: false,
     },
     {
       profession: 'captain',
-      url: 'captain.png',
-      keywords: ['nautical', 'ship wheel', 'rope', 'net', 'compass'],
+      url: 'characters/captain.png',
+      keywords: ['ocean', 'rope', 'net', 'compass', 'adventure', 'sailing'],
       hidden: false,
     },
     {
       profession: 'detective',
-      url: 'detective.png',
-      keywords: ['magnifying glass', 'files', 'crime tape'],
+      url: 'characters/detective.png',
+      keywords: ['office', 'files', 'trench coat', 'crime', 'mystery'],
       hidden: false,
     }
   ]);
@@ -29,64 +29,75 @@ export const useGameStore = defineStore('game', () => {
     {
       room: 'bathroom',
       url: 'rooms/bathroom.png',
-      keywords: [],
+      keywords: ['sink', 'tiles', 'water', 'mold', 'towel', 'soap', 'sponge'],
       hidden: false,
     },
     {
       room: 'bedroom',
       url: 'rooms/bedroom.png',
-      keywords: [],
+      keywords: ['dream', 'linen', 'curtains', 'rug', 'pillows', 'bedframe'],
       hidden: false,
     },
     {
       room: 'cellar',
       url: 'rooms/cellar.png',
-      keywords: [],
+      keywords: ['cement', 'darkness', 'cobwebs', 'wine', 'barrel'],
       hidden: false,
     },
     {
       room: 'chapel',
       url: 'rooms/chapel.png',
-      keywords: [],
+      keywords: ['angel', 'stained glass', 'light beams', 'cross', 'sacred book'],
       hidden: false,
     },
     {
       room: 'greenhouse',
       url: 'rooms/greenhouse.png',
-      keywords: [],
+      keywords: ['glass', 'green', 'dirt', 'worms', 'light beams', 'plants'],
       hidden: false,
     },
     {
       room: 'kitchen',
       url: 'rooms/kitchen.png',
-      keywords: [],
+      keywords: ['food', 'smoke', 'counter', 'tiles', 'pots', 'oven', 'rat', 'dinner'],
       hidden: false,
     },
     {
       room: 'library',
       url: 'rooms/library.png',
-      keywords: [],
+      keywords: ['books', 'dust', 'lamp', 'painting', 'shelves'],
       hidden: false,
     },
     {
       room: 'parlor',
       url: 'rooms/parlor.png',
-      keywords: [],
+      keywords: ['chair', 'couch', 'desk', 'painting', 'cocktail party', 'cocktails'],
       hidden: false,
     },
     {
       room: 'stable',
       url: 'rooms/stable.png',
-      keywords: [],
+      keywords: ['hay', 'dirt', 'wooden walls', 'horse tail', 'wooden stall', 'barn door'],
       hidden: false,
     },
 
+  ]);
+
+  const objects = reactive([
+    {
+      object: 'knife',
+      url: 'objects/knife.png',
+      keywords: ['metal', 'reflection', 'sharp'],
+      hidden: false,
+    },
+    
   ]);
   
   const answers = ref([]);
   const phase = ref(0);
   const turn = ref(0);
   const clues = ref([]);
+  const clueLoading = ref(false);
 
   const newGame = () => {
     resetGame();
@@ -96,38 +107,43 @@ export const useGameStore = defineStore('game', () => {
 
   const resetGame = () => {
     phase.value = 0;
-    for (const character of characters) {
-      character.hidden = false;
+    const allPhaseOptions = [characters, rooms, objects]
+    for (const options of allPhaseOptions) {
+      for (const option of options) {
+        option.hidden = false;
+      }
     }
+    clues.value = [];
   }
 
   const chooseAnswers = () => {
     const murderer = Math.floor(Math.random() * characters.length);
     const room = Math.floor(Math.random() * rooms.length);
-    const weapon = Math.floor(Math.random() * characters.length);
+    const weapon = Math.floor(Math.random() * objects.length);
     answers.value = [murderer, room, weapon];
   }
 
   const getCurrentPhaseOptions = () => {
-    if (phase.value === 0) {
-      return characters;
-    }
-    if (phase.value === 1) {
-      return rooms;
-    }
-    else {
-      return characters;
-    }
+    const options = [characters, rooms, objects];
+    return options[phase.value];
+  }
+
+  const advancePhase = () => {
+    phase.value++;
+    clues.value = [];
   }
 
   const checkGuess = (guess) => {
     if (guess === answers.value[phase.value]) {
-      phase.value++;
-      // Clear the previous clue images
+      advancePhase();
+    } else if (clues.value.length === getCurrentPhaseOptions().length - 1) {
+      advancePhase();
+      // Display message that you were wrong
     } else {
       getCurrentPhaseOptions()[guess].hidden = true;
     }
     turn.value++;
+    generateClueImage();
   }
 
   const getCurrentAnswer = () => {
@@ -138,10 +154,12 @@ export const useGameStore = defineStore('game', () => {
     const keywords = getCurrentAnswer().keywords;
     const shuffledKeywords = keywords.sort(() => 0.5 - Math.random());
     const selectedKeywords = shuffledKeywords.slice(0, 2);
-    const prompt = `detailed illustration of ${selectedKeywords[0]} and ${selectedKeywords[1]} with other related objects in the background, abstract digital art`;
+    const prompt = `Digital art that embodies the spirit of ${selectedKeywords[0]}, with hints of ${selectedKeywords[1]}.`;
+    clueLoading.value = true; 
     const response = await imageStore.getImage(prompt, 1);
+    clueLoading.value = false; 
     clues.value.push(response[0].url);
   }
 
-  return {characters, rooms, answers, phase, turn, clues, newGame, checkGuess};
+  return {characters, rooms, objects, answers, phase, turn, clues, clueLoading, newGame, checkGuess};
 });
